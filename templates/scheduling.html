@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!-- Breadcrumb -->
+    <section id="bc" class="mt-3">
+        <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'index' %}">
+                <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item active">{{ user.username }}'s Schedule</li>
+            </ol>
+        </nav>
+        </div>
+    </section>
+
+    <section id="sec-calender" class="py-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+                <section id="sec-calender" class="py-4">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <div id='calendar'></div> 
+                        </div>
+                      </div>
+                    </div>
+                </section>
+            </div>
+          </div>
+        </div>
+    </section>
+    <script>
+        jQuery(document).ready(function($) {
+            // Your FullCalendar initialization code here
+                var calendar = $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    defaultView: 'agendaWeek',
+                    events: '{% url "all_schedule" %}',
+                });
+        });
+     </script>
+{% endblock %}
+
+
+  

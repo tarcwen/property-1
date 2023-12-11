@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %} | Register Account {% endblock %}
+
+{% block content %}
+<section id="register" class="bg-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h4>
+                <i class="fas fa-user-plus"></i> Register As</h4>
+            </div>
+            <div class="card-body">
+              <a href="{% url 'register' %}" class="btn btn-primary col-md-6">Customer</a>
+              <br/>
+            </div>
+            <hr>
+            <div class="card-body">
+              <a href="{% url 'realtors_register' %}" class="btn btn-danger col-md-6">Realtor</a>
+              <br/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock %}

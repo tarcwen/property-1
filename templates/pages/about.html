@@ -1,0 +1,201 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block title %} | About Us {% endblock %}
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+	<div class="container">
+	  <div class="row text-center">
+		<div class="col-md-12">
+		  <h1 class="display-4 mb-4">About Us</h1>
+		  <!-- <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, pariatur!</p> -->
+		</div>
+	  </div>
+	</div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+	<div class="container">
+	  <nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+		  <li class="breadcrumb-item">
+			<a href="{% url 'index' %}">
+			  <i class="fas fa-home"></i> Home</a>
+		  </li>
+		  <li class="breadcrumb-item active"> About</li>
+		</ol>
+	  </nav>
+	</div>
+  </section>
+
+  <h2 class="text-center">Frequently Asked Questions</h2>
+  <hr class="main_underline">
+
+  <section id="search" class="py-4">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form class="form-inline" id="faq-search-form">
+            <input class="form-control mr-sm-2" type="text" id="faq-search-input" placeholder="Search FAQs" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-4">
+    <div class="container">
+
+      <!-- Question 1 -->
+      <div class="faq-question">
+        <h3>Q: What is RealEstate?</h3>
+        <p>A: RealEstate is RealEstate is a prominent real estate company offering a diverse range of properties and online reservation services. We strive to make the property buying process seamless and convenient for our clients.</p></br>
+      </div>
+
+      <!-- Question 2 -->
+
+	  <div class="faq-question">
+        <h3>Q: How does the online reservation process work</h3>
+        <p>A:  Our online reservation process is designed for simplicity. Once you find a property you're interested in, follow the prompts on our website to reserve it. You'll receive confirmation and further instructions.</p></br>
+      </div>
+	  <div class="faq-question">
+        <h3>Q: Is there a fee for using the online reservation service?</h3>
+        <p>A: No, our online reservation service is free for users. You only pay the specified amount for the property upon successful reservation.</p></br>
+      </div>
+	  <div class="faq-question">
+        <h3>Q: How can I view detailed information about a property?</h3>
+        <p>A: Click on the property listing to access comprehensive details. This includes high-quality images, specifications, and other relevant information to help you make an informed decision.</p></br>
+      </div>
+	  <div class="faq-question">
+        <h3>Q: What are the latest offerings from RealEstate?</h3>
+        <p>A: Explore our latest additions to the portfolio by visiting the "LISTINGS" section on our website. Each product have the Listing Date</p></br>
+      </div>
+	  <div class="faq-question">
+        <h3>Q: Can I get assistance from a RealEstate representative during the property buying process?</h3>
+        <p>A: Absolutely! Our team of professionals is here to assist you at every step of the property buying process. Feel free to reach out for guidance and support..</p></br>
+      </div>
+	  <div class="faq-question">
+        <h3>Q: What do I do if I encounter technical issues on the website?
+		</h3>
+        <p>A: If you experience technical issues, please contact our technical support team at [provide contact details]. They will promptly address any concerns and ensure a smooth online experience.</p></br>
+      </div>
+
+	  <div class="faq-question">
+        <h3>Q: Why buy a house with RealEstate?</h3>
+        <p>A: RealEstate offers...</p></br>
+      </div>
+
+      <!-- Add more questions and answers as needed -->
+
+      <!-- Example question -->
+      <div class="faq-question">
+        <h3>Q: How can I contact RealEstate?</h3>
+        <p>A: You can contact us by phone at [Phone Number] or by email at [Email Address].</p></br>
+      </div>
+    </div>
+	
+
+
+  </section>
+
+  <!-- ... (existing code) ... -->
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Handle form submission
+      $("#faq-search-form").submit(function(e) {
+        e.preventDefault();
+        searchFAQ();
+      });
+
+      // Function to search and filter FAQs
+      function searchFAQ() {
+        var searchTerm = $("#faq-search-input").val().toLowerCase();
+
+        // Hide all FAQs
+        $(".faq-question").hide();
+
+        // Show FAQs that match the search term
+        $(".faq-question").filter(function() {
+          return $(this).text().toLowerCase().includes(searchTerm);
+        }).show();
+      }
+    });
+  </script>
+
+  
+ <!-- ------------------------------------------------------------------- -->
+  <!-- Work -->
+	<section  class="bg-dark text-white text-center py-5">
+		<div class="testimony">
+			<h2 class="text-center">Plan to put some general info here</h2>
+			<div class="testimonial_data">
+				<a class="testimonial_text">"Can it be like how manay listing created this month on this website??"</a>
+			</div>
+		</div>
+	</section>
+
+  <section id="team" class="py-5">
+	<div class="container">
+	  <h2 class="text-center">Our Team</h2>
+	  <hr class="main_underline">
+	  <div class="row text-center">
+		{% if realtors %}
+		  {% for realtor in realtors %}
+		  	
+				<div class="our-team-bottom">
+					<div class="col-md-4 our-team">
+						<a href="{% url 'selectedRealtors' realtor.id %}" class="col-md-4 our-team">
+						<i class="fas fa-award text-success mb-3"></i> Realtor</p>
+						<img src="{{ realtor.photo.url }}" alt="" class="rounded-circle mb-3 our-team">
+						<h4>{{ realtor.name }}</h4>
+						<!-- <hr> -->
+						<!-- <h4>{{ realtor.name }}</h4> -->
+						<!-- <p class="text-success"> -->
+						<!-- <i class="fas fa-award text-success mb-3"></i> Realtor</p> -->
+						<!-- <hr> -->
+						<p><i class="fas fa-phone"></i> {{ realtor.phone }}</p>
+						<p><i class="fas fa-envelope-open"></i> {{ realtor.email }}</p>
+					</a>
+					</div>
+				</div>
+			
+		  {% endfor %}
+		{% else %}
+		  <div class="col-md-12">
+			<p>No Realtors Available</p>
+		  </div>
+		{% endif %}       
+	  </div>
+	</div>
+  </section>
+
+{% endblock %}
+<script>
+  $(document).ready(function() {
+	// Handle form submission
+	$("#faq-search-form").submit(function(e) {
+	  e.preventDefault();
+	  searchFAQ();
+	});
+
+	// Function to search and filter FAQs
+	function searchFAQ() {
+	  var searchTerm = $("#faq-search-input").val().toLowerCase();
+
+	  // Hide all FAQs
+	  $(".faq-question").hide();
+
+	  // Show FAQs that match the search term
+	  $(".faq-question").filter(function() {
+		return $(this).text().toLowerCase().includes(searchTerm);
+	  }).show();
+	}
+  });
+</script>

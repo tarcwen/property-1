@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %} | Display QR Code {% endblock %}
+
+{% block content %}
+<section id="display-qr-code" class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4>
+                            <i class="fas fa-qrcode"></i> Scan QR Code</h4>
+                    </div>
+
+                    <!-- Alerts -->
+
+                    <div class="card-body text-center">
+                        <h5>Please scan this QR by using Google Authenticator</h5>
+                        {% if qr_code_img %}
+                            <img src="{{ qr_code_img.url }}" alt="" class="img-main img-fluid mb-3">
+                        {% endif %}
+                            <hr>
+                            {% include 'partials/_alerts.html' %}
+                            {% if scanned %}
+                                <p class="text-danger">Your QR Code has been scanned, Please use Google Authenticator to get OTP</p>
+                            {% endif %}
+                        
+                        <form action="{% url 'verify_otp' encrypted_id %}" method="post">
+                            {% csrf_token %}
+                            <label for="otp_code">Enter OTP:</label>
+                            <input type="text" id="otp_code" name="otp_code" required>
+                            <input type="submit" value="Verify OTP" class="btn btn-secondary btn-block mt-3">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

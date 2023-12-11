@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'css/all.css' %}">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <!-- Custom -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Lightbox -->
+  <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}">
+  <!-- Mortgage -->
+  <link rel="stylesheet" href="{% static 'css/mortgage.css' %}">
+      
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <!-- Include FullCalendar CSS and JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+  
+      
+  <title> Real Estate {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+  <!-- Top Bar -->
+  {% include 'partials/_topbar.html' %}
+  <!-- NavBar -->
+  {% include 'partials/_navbar.html' %}
+    <!-- Main Content -->
+  {% block content %} {% endblock %}
+  <!-- Footer -->
+  {% include 'partials/_footer.html' %}
+  
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
+  <script src="{% static 'js/lightbox.min.js' %} "></script>
+  <script src="{% static 'js/main.js' %} "></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<!-- disable screenshot-->
+<div id="customAlert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 1000px; border: 1px solid #ccc;">
+  <p>Taking screenshots is not allowed.</p>
+  <button onclick="hideCustomAlert()">Close</button>
+</div>
+
+<script>
+// Function to show the custom alert
+function showCustomAlert() {
+  var customAlert = document.getElementById('customAlert');
+  customAlert.style.display = 'block';
+}
+
+// Function to hide the custom alert
+function hideCustomAlert() {
+  var customAlert = document.getElementById('customAlert');
+  customAlert.style.display = 'none';
+}
+
+// Event listener for keydown
+$(document).on('keyup', function(e) {
+  // Check for common screenshot key combinations
+  if (
+    (e.key === 'PrintScreen') ||
+    (e.key === 'PrtScn') ||
+    (e.key === 'ScreenCapture') ||
+    (e.key === 's' && e.ctrlKey) ||
+    (e.key === 'S' && e.ctrlKey) ||
+    (e.key === 's' && e.shiftKey && e.metaKey) ||
+    (e.key === 'S' && e.shiftKey && e.metaKey)
+  ) {
+    e.preventDefault();
+    showCustomAlert();
+  }
+});
+</script>
+
+<script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+<script>
+  window.botpressWebChat.init({
+      "composerPlaceholder": "Chat with bot",
+      "botConversationDescription": "This chatbot was built surprisingly fast with Botpress",
+      "botId": "931bd68b-10db-43c4-bb90-fafcfd0def0b",
+      "hostUrl": "https://cdn.botpress.cloud/webchat/v1",
+      "messagingUrl": "https://messaging.botpress.cloud",
+      "clientId": "931bd68b-10db-43c4-bb90-fafcfd0def0b",
+      "webhookId": "2d0f861f-5def-48b2-98cb-ff45047788a0",
+      "lazySocket": true,
+      "themeName": "prism",
+      "stylesheet": "https://webchat-styler-css.botpress.app/prod/b11712a6-3b66-418d-bb8b-44cb358e70c9/v67597/style.css",
+      "frontendVersion": "v1",
+      "showPoweredBy": true,
+      "theme": "prism",
+      "themeColor": "#2563eb"
+  });
+</script>
+</body>
+
+</html>

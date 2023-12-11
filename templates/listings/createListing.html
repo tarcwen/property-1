@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-4 mb-4">Create Listing</h1>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+        <a href="{% url 'index' %}">
+          <i class="fas fa-home"></i> Home</a>
+        </li>
+        
+        <li class="breadcrumb-item">
+          <a href="{% url 'realtors' %}"> Realtor</a>
+        </li>
+
+        <li class="breadcrumb-item active"> Create Listing</li>
+      </ol>
+      </nav>
+    </div>
+    </section>
+
+    
+
+  <section id="CreateListingForm" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="form-group">
+        <label style="color: black; font-size: 25px;">Now you are creating a new listing</label>
+      </div>
+      <form method="POST" class="post-form" action="{% url 'CreateListing' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group" >
+          <input type="hidden" id="{{ form.realtor.realtor }}" value="{{ form.realtor.value }}" readonly>
+          {{ form.realtor }}
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.title.title }}">{{ form.title.label }}</label>
+              {{ form.title }}
+              {% if form.title.errors %}
+                <div class="alert alert-danger">
+                  {{ form.title.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.address.address }}">{{ form.address.label }}</label>
+              {{ form.address }}
+              {% if form.address.errors %}
+                <div class="alert alert-danger">
+                  {{ form.address.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.description.description }}">{{ form.description.label }}</label>
+              {{ form.description }}
+              {% if form.description.errors %}
+                <div class="alert alert-danger">
+                  {{ form.description.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.city.city }}">{{ form.city.label }}</label>
+              {{ form.city }}
+              {% if form.city.errors %}
+                <div class="alert alert-danger">
+                  {{ form.city.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.price.price }}">{{ form.price.label }}</label>
+              {{ form.price }}
+              {% if form.price.errors %}
+                <div class="alert alert-danger">
+                  {{ form.price.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.state.state }}">{{ form.state.label }}</label>
+              {{ form.state }}
+              {% if form.state.errors %}
+                <div class="alert alert-danger">
+                  {{ form.state.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.bedrooms.bedrooms }}">{{ form.bedrooms.label }}</label>
+              {{ form.bedrooms }}
+              {% if form.bedrooms.errors %}
+                <div class="alert alert-danger">
+                  {{ form.bedrooms.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.zipcode.zipcode }}">{{ form.zipcode.label }}</label>
+              {{ form.zipcode }}
+              {% if form.zipcode.errors %}
+                <div class="alert alert-danger">
+                  {{ form.zipcode.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.bathrooms.bathrooms }}">{{ form.bathrooms.label }}</label>
+              {{ form.bathrooms }}
+              {% if form.bathrooms.errors %}
+                <div class="alert alert-danger">
+                  {{ form.bathrooms.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.garage.garage }}">{{ form.garage.label }}</label>
+              {{ form.garage }}
+              {% if form.garage.errors %}
+                <div class="alert alert-danger">
+                  {{ form.garage.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.sqft.sqft }}">{{ form.sqft.label }}</label>
+              {{ form.sqft }}
+              {% if form.sqft.errors %}
+                <div class="alert alert-danger">
+                  {{ form.sqft.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.lot_size.lot_size }}">{{ form.lot_size.label }}</label>
+              {{ form.lot_size }}
+              {% if form.lot_size.errors %}
+                <div class="alert alert-danger">
+                  {{ form.lot_size.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.photo_main.photo_main }}">{{ form.photo_main.label }}</label>
+              {{ form.photo_main }}
+              {% if form.photo_main.errors %}
+                <div class="alert alert-danger">
+                  {{ form.photo_main.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.photo_1.photo_1 }}">{{ form.photo_1.label }}</label>
+              {{ form.photo_1 }}
+              {% if form.photo_1.errors %}
+                <div class="alert alert-danger">
+                  {{ form.photo_1.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.photo_2.photo_2 }}">{{ form.photo_2.label }}</label>
+              {{ form.photo_2 }}
+              {% if form.photo_2.errors %}
+                <div class="alert alert-danger">
+                  {{ form.photo_2.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.photo_3.photo_3 }}">{{ form.photo_3.label }}</label>
+              {{ form.photo_3 }}
+              {% if form.photo_3.errors %}
+                <div class="alert alert-danger">
+                  {{ form.photo_3.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.photo_4.photo_4 }}">{{ form.photo_4.label }}</label>
+              {{ form.photo_4 }}
+              {% if form.photo_4.errors %}
+                <div class="alert alert-danger">
+                  {{ form.photo_4.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.photo_5.photo_5 }}">{{ form.photo_5.label }}</label>
+              {{ form.photo_5 }}
+              {% if form.photo_5.errors %}
+                <div class="alert alert-danger">
+                  {{ form.photo_5.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="color: black;" for="{{ form.photo_6.photo_6 }}">{{ form.photo_6.label }}</label>
+              {{ form.photo_6 }}
+              {% if form.photo_6.errors %}
+                <div class="alert alert-danger">
+                  {{ form.photo_6.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              
+            </div>
+          </div>
+        </div>
+
+        <input type="submit" value="Submit" class="btn btn-secondary">
+
+      </form>
+    </div>
+  </section>
+{% endblock %}

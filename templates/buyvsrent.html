@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} | Buy vs Rent {% endblock %}
+
+{% block content %}
+  <section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4 mb-4">Buy vs Rent Calculator</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> Buy vs Rent</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Buy vs Rent Calculator -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="homePrice">Desired Home Price:</label>
+          <input type="number" id="homePrice" class="form-control" placeholder="Enter home price">
+        </div>
+
+        <div class="form-group">
+          <label for="downPayment">Down Payment (%):</label>
+          <input type="number" id="downPayment" class="form-control" placeholder="Enter down payment">
+        </div>
+
+        <div class="form-group">
+          <label for="monthlyRent">Desired Monthly Rent:</label>
+          <input type="number" id="monthlyRent" class="form-control" placeholder="Enter monthly rent">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="loanTerm">Loan Term (years):</label>
+          <input type="number" id="loanTerm" class="form-control" placeholder="Enter loan term">
+        </div>
+
+        <div class="form-group">
+          <label for="interestRate">Interest Rate (%):</label>
+          <input type="number" id="interestRate" value = 4 class="form-control" placeholder="Enter interest rate">
+        </div>
+
+        <button onclick="calculate()" class="btn btn-primary mt-3">Calculate</button>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <canvas id="chart"></canvas>
+        <p id="comparisonMessage" class="mt-3 text-danger"></p>
+        <p id="buyGain" ></p>
+        <p id="totalRentFees"></p>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+	  let chart; // Declare chart globally
+
+	  function calculate() {
+		  // Get input values
+		  const homePrice = parseFloat(document.getElementById('homePrice').value);
+		  const downPayment = parseFloat(document.getElementById('downPayment').value);
+		  const monthlyRent = parseFloat(document.getElementById('monthlyRent').value);
+		  const loanTerm = parseFloat(document.getElementById('loanTerm').value);
+		  const interestRate = parseFloat(document.getElementById('interestRate').value);
+
+		  // Calculate loan amount
+		  const loanAmount = homePrice - (downPayment / 100) * homePrice;
+
+		  // Calculate monthly mortgage payment
+		  const monthlyInterestRate = interestRate / 100 / 12; // Convert annual interest rate to monthly
+		  const monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -loanTerm * 12));
+
+		  // Calculate total cost for buying
+		  const totalCostBuy = monthlyPayment * loanTerm * 12 + downPayment;
+
+		  // Calculate total cost for renting
+		  const totalCostRent = monthlyRent * loanTerm * 12;
+
+		  // Calculate buy gain
+		  const buyGain = totalCostRent - totalCostBuy;
+
+		  // Display the results
+		  const message = buyGain >= 0 ? `Buying is cheaper if you stay for ${loanTerm} years or longer.` : 'Renting is cheaper.';
+		  document.getElementById('comparisonMessage').textContent = message;
+		  document.getElementById('buyGain').textContent = `Buy Gain: $${buyGain.toFixed(2)}`;
+		  document.getElementById('totalRentFees').textContent = `Total Rent Fees: $${totalCostRent.toFixed(2)}`;
+
+		  // Create or update the line chart
+		  if (!chart) {
+			  createChart(loanTerm, monthlyPayment, downPayment, monthlyRent);
+		  } else {
+			  updateChart(loanTerm, monthlyPayment, downPayment, monthlyRent);
+		  }
+	  }
+
+	  function createChart(loanTerm, monthlyPayment, downPayment, monthlyRent) {
+		  const ctx = document.getElementById('chart').getContext('2d');
+		  chart = new Chart(ctx, {
+			  type: 'line',
+			  data: {
+				  labels: Array.from({ length: loanTerm }, (_, i) => i + 1),
+				  datasets: [
+					  {
+						  label: 'Buy',
+						  borderColor: 'rgba(75, 192, 192, 1)',
+						  data: Array.from({ length: loanTerm }, (_, i) => monthlyPayment * i * 12 + downPayment)
+					  },
+					  {
+						  label: 'Rent',
+						  borderColor: 'rgba(255, 99, 132, 1)',
+						  data: Array.from({ length: loanTerm }, (_, i) => monthlyRent * i * 12)
+					  }
+				  ]
+			  },
+			  options: {
+				  scales: {
+					  x: {
+						  type: 'linear',
+						  position: 'bottom'
+					  },
+					  y: {
+						  beginAtZero: true
+					  }
+				  }
+			  }
+		  });
+	  }
+
+	  function updateChart(loanTerm, monthlyPayment, downPayment, monthlyRent) {
+		  // Update the chart data
+		  chart.data.labels = Array.from({ length: loanTerm }, (_, i) => i + 1);
+		  chart.data.datasets[0].data = Array.from({ length: loanTerm }, (_, i) => monthlyPayment * i * 12 + downPayment);
+		  chart.data.datasets[1].data = Array.from({ length: loanTerm }, (_, i) => monthlyRent * i * 12);
+		  
+		  // Update the chart options
+		  chart.options.plugins.title.text = '';
+
+		  // Update the chart
+		  chart.update();
+	  }
+  </script>
+
+{% endblock %}
