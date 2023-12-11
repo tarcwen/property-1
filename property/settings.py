@@ -28,7 +28,7 @@ DEBUG = True
 
 SITE_ID = 1
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.vercel.app']
 
 ENCRYPT_KEY = b'Od-knE-x_eekbY5oBcyzUB44uSRRnb1OlwzAi4aK6AI='
 
