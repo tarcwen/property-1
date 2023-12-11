@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     "django_check_seo",
     'mysite.apps.MysiteConfig',
+    'django_cleanup.apps.CleanupConfig',
     'listing.apps.ListingConfig',
     'realtors.apps.RealtorsConfig',
     'contacts.apps.ContactsConfig',
