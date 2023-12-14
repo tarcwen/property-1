@@ -16,23 +16,23 @@ from mysite.utils import get_geolocation_info
 def index(request):
   encrypted_id = request.encrypted_id
 
-  # listings = Listing.objects.order_by('-list_date').filter(is_published=True)
-  # listings = Listing.objects.annotate(view_count=Count('listingview')).order_by('-view_count', '-list_date').filter(is_published=True)
-  if request.user.groups.filter(name='customer').exists():
-    fake_ip_address = '118.101.197.197'  # Replace with the desired fake IP address
-    geolocation_info = get_geolocation_info(fake_ip_address)
-    city_name = geolocation_info.city 
+  # # listings = Listing.objects.order_by('-list_date').filter(is_published=True)
+  # # listings = Listing.objects.annotate(view_count=Count('listingview')).order_by('-view_count', '-list_date').filter(is_published=True)
+  # if request.user.groups.filter(name='customer').exists():
+  #   fake_ip_address = '118.101.197.197'  # Replace with the desired fake IP address
+  #   geolocation_info = get_geolocation_info(fake_ip_address)
+  #   city_name = geolocation_info.city 
 
-    # Query to get city-specific listings
-    city_listings = Listing.objects.filter(city=city_name).annotate(view_count=Count('listingview')).order_by('-view_count', '-list_date')
+  #   # Query to get city-specific listings
+  #   city_listings = Listing.objects.filter(city=city_name).annotate(view_count=Count('listingview')).order_by('-view_count', '-list_date')
 
-    # Query to get remaining listings
-    remaining_listings = Listing.objects.exclude(city=city_name).annotate(view_count=Count('listingview')).order_by('-view_count', '-list_date')
+  #   # Query to get remaining listings
+  #   remaining_listings = Listing.objects.exclude(city=city_name).annotate(view_count=Count('listingview')).order_by('-view_count', '-list_date')
 
-    # Combine city-specific listings and remaining listings
-    listings = list(city_listings) + list(remaining_listings)
-  else:
-    listings = Listing.objects.order_by('-list_date').filter(is_published=True)
+  #   # Combine city-specific listings and remaining listings
+  #   listings = list(city_listings) + list(remaining_listings)
+  # else:
+  listings = Listing.objects.order_by('-list_date').filter(is_published=True)
 
   paginator = Paginator(listings, 6)
   page = request.GET.get('page')
@@ -154,7 +154,15 @@ def apply_watermark_to_image(image, realtor_name, realtor_phone, realtor_email):
 
         # Add watermark text
         watermark_text = f"RealEstate\n{realtor_name}\nPhone: {realtor_phone}\nEmail: {realtor_email}"
+        
+        # Use a larger font size
+        font_size = 50
         font = ImageFont.load_default()
+
+        # Adjust the font size
+        font = font.font_variant(size=font_size)
+
+        # Draw the text on the image
         draw.text((10, 10), watermark_text, fill=(255, 255, 255), font=font)
 
         # Save the image to a BytesIO buffer
