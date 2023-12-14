@@ -138,6 +138,10 @@ def upscale_image(image):
         # If the API request fails, return None
         return None
 
+from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 def apply_watermark_to_image(image, realtor_name, realtor_phone, realtor_email):
     # Upscale the image using the API
     upscaled_image = upscale_image(image)
@@ -148,7 +152,15 @@ def apply_watermark_to_image(image, realtor_name, realtor_phone, realtor_email):
 
         # Add watermark text
         watermark_text = f"RealEstate\n{realtor_name}\nPhone: {realtor_phone}\nEmail: {realtor_email}"
+        
+        # Use a larger font size
+        font_size = 50
         font = ImageFont.load_default()
+
+        # Adjust the font size
+        font = font.font_variant(size=font_size)
+
+        # Draw the text on the image
         draw.text((10, 10), watermark_text, fill=(255, 255, 255), font=font)
 
         # Save the image to a BytesIO buffer
@@ -165,8 +177,6 @@ def apply_watermark_to_image(image, realtor_name, realtor_phone, realtor_email):
     else:
         # Return the original image if the upscaling fails
         return image
-
-
 
 def UpdateListing(request, listing_id):
 
